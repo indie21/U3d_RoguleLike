@@ -24,6 +24,10 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (GameManager.Instance.food <= 0) {
+			return;
+		}
 		
 		RestTimer += Time.deltaTime;
 		if (RestTimer < RestTime) {
@@ -80,6 +84,9 @@ public class Player : MonoBehaviour {
 
 		rigidbody2Dx.MovePosition(Vector2.Lerp(transform.position, 
 			targetPos, 60*Time.deltaTime));
+
+
+
 	}
 
 	public void TakeDamage(int lossFood) {

@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
 
 	// 当前关卡
 	public int level = 1; 
-	public int food = 100;
+	public int food = 10;
 	public List<Enemy> enemyList = new List<Enemy> ();
 	private bool sleepStep = true;
 	private Text foodText;
@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour {
 	public void ReduceFood(int foodCount) {
 		food -= foodCount;
 		UpdateFoodText (-foodCount);
+
+		if (food <= 0) {
+			foodText.text = "YouDie!";
+		}
 	}
 
 	// Use this for initialization
