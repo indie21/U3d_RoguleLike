@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
@@ -15,7 +16,8 @@ public class GameManager : MonoBehaviour {
 	// 当前关卡
 	public int level = 1; 
 	public int food = 100;
-
+	public List<Enemy> enemyList = new List<Enemy> ();
+	private bool sleepStep = true;
 
 	public void AddFood(int food) {
 		food += food;
@@ -33,5 +35,16 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void OnPlayerMove() {
+		if (sleepStep == true) {
+			sleepStep = false;
+		} else {
+			sleepStep = true;
+			foreach (var enemy in enemyList) {
+				enemy.Move ();
+			}
+		}
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour {
 
+	private BoxCollider2D selfCollider;
 	private Transform player;
 	private Vector2 targetPos;
 	private Rigidbody2D rigidbody2Dx;
@@ -36,7 +37,27 @@ public class Enemy : MonoBehaviour {
 				}
 			}
 
-			targetPos += new Vector2 (x, y);
+
+			// 运动检测.
+			selfCollider.enabled = false;
+			RaycastHit2D hid2d = Physics2D.Linecast (targetPos, targetPos + new Vector2(x,y) );
+			selfCollider.enabled = true;
+
+
+			Debug.Log (hid2d.transform);
+			if (hid2d.transform == null) {
+				targetPos += new Vector2 (x, y);
+			} else {
+				switch (hid2d.collider.tag) {
+				case "Player":
+					break;
+				case "Food":
+				case "Suda":
+					targetPos += new Vector2 (x, y);
+					break;
+				}
+			}
+
 		}
 	}
 
@@ -45,6 +66,11 @@ public class Enemy : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
 		targetPos = transform.position;
 		rigidbody2Dx = GetComponent<Rigidbody2D> ();
+
+		selfCollider = GetComponent<BoxCollider2D> ();
+
+
+		GameManager.Instance.enemyList.Add (this);
 	}
 	
 	// Update is called once per frame

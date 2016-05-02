@@ -73,6 +73,7 @@ public class Player : MonoBehaviour {
 
 			RestTimer = 0;
 			selfCollider.enabled = true;
+			GameManager.Instance.OnPlayerMove ();
 		}
 
 		rigidbody2Dx.MovePosition(Vector2.Lerp(transform.position, 
