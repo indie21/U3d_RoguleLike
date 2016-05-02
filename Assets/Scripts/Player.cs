@@ -40,6 +40,8 @@ public class Player : MonoBehaviour {
 
 		if (h != 0 || v != 0) {
 
+			GameManager.Instance.ReduceFood (1);
+
 			// 判断碰撞
 			selfCollider.enabled = false;
 			
@@ -78,5 +80,11 @@ public class Player : MonoBehaviour {
 
 		rigidbody2Dx.MovePosition(Vector2.Lerp(transform.position, 
 			targetPos, 60*Time.deltaTime));
+	}
+
+	public void TakeDamage(int lossFood) {
+		Debug.Log ("player take damage");
+		GameManager.Instance.ReduceFood (lossFood);
+		selfAnimator.SetTrigger ("damage");
 	}
 }

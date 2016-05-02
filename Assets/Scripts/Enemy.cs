@@ -7,13 +7,18 @@ public class Enemy : MonoBehaviour {
 	private Transform player;
 	private Vector2 targetPos;
 	private Rigidbody2D rigidbody2Dx;
+	private Animator animator;
+	public int lossFood = 10;
 
 
 	// 每次主角移动两部，敌人移动一步.
 	public void Move() {
 		Vector2 offset = player.position - transform.position;
+		Debug.Log (offset.magnitude);
 
-		if (offset.magnitude < 1.1) {
+		if (offset.magnitude <= 1) {
+			animator.SetTrigger ("attack");
+			player.SendMessage ("TakeDamage", lossFood);
 			// 攻击
 		} else {
 			float x=0, y=0;
@@ -24,8 +29,7 @@ public class Enemy : MonoBehaviour {
 				if (offset.x < 0) {
 					x = -1;
 				} else {
-					x = 1; 
-					
+					x = 1; 	
 				}
 
 			} else {
@@ -43,8 +47,6 @@ public class Enemy : MonoBehaviour {
 			RaycastHit2D hid2d = Physics2D.Linecast (targetPos, targetPos + new Vector2(x,y) );
 			selfCollider.enabled = true;
 
-
-			Debug.Log (hid2d.transform);
 			if (hid2d.transform == null) {
 				targetPos += new Vector2 (x, y);
 			} else {
@@ -54,6 +56,7 @@ public class Enemy : MonoBehaviour {
 				case "Food":
 				case "Suda":
 					targetPos += new Vector2 (x, y);
+					Destroy (hid2d.collider.gameObject);
 					break;
 				}
 			}
@@ -66,7 +69,7 @@ public class Enemy : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
 		targetPos = transform.position;
 		rigidbody2Dx = GetComponent<Rigidbody2D> ();
-
+		animator = GetComponent<Animator> ();
 		selfCollider = GetComponent<BoxCollider2D> ();
 
 

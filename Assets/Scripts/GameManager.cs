@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -18,23 +19,40 @@ public class GameManager : MonoBehaviour {
 	public int food = 100;
 	public List<Enemy> enemyList = new List<Enemy> ();
 	private bool sleepStep = true;
+	private Text foodText;
 
-	public void AddFood(int food) {
-		food += food;
+	public void AddFood(int foodCount) {
+		food += foodCount;
+		UpdateFoodText (foodCount);
 	}
 
-	public void ReduceFood(int food) {
-		food -= food;
+	public void ReduceFood(int foodCount) {
+		food -= foodCount;
+		UpdateFoodText (-foodCount);
 	}
 
 	// Use this for initialization
 	void Awake () {
 		_instance = this;	
+		initGame ();
+	}
+
+	void initGame() {
+		foodText = GameObject.Find ("FoodText").GetComponent<Text> ();
+		UpdateFoodText (0);
+	}
+
+	void UpdateFoodText(int chx) {
+		if (chx == 0) {
+			foodText.text = "Food:" + food;
+		} else {
+			foodText.text = "Food:" + food + ":" + chx;
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 
 	public void OnPlayerMove() {
