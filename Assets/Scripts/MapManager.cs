@@ -91,6 +91,7 @@ public class MapManager : MonoBehaviour {
 			}
 		}
 
+
 		// 创建障碍物
 		int wallCount = Random.Range(MinCountWall, MaxCountWall+1);
 		instantialItems (wallCount, WallArray);
