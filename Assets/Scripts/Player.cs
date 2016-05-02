@@ -26,6 +26,9 @@ public class Player : MonoBehaviour {
 	void Update () {
 
 		if (GameManager.Instance.food <= 0) {
+			//重新加载本关卡.
+			GameManager.Instance.AddFood(10);
+			Application.LoadLevel(Application.loadedLevel);
 			return;
 		}
 		

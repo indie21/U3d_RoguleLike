@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour {
 	private bool sleepStep = true;
 	private Text foodText;
 
+	private MapManager mapManager;
+
 	public void AddFood(int foodCount) {
 		food += foodCount;
 		UpdateFoodText (foodCount);
@@ -38,12 +40,17 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		_instance = this;	
+		DontDestroyOnLoad (gameObject);
 		initGame ();
 	}
 
 	void initGame() {
 		foodText = GameObject.Find ("FoodText").GetComponent<Text> ();
 		UpdateFoodText (0);
+
+		mapManager = GetComponent<MapManager> ();
+		mapManager.InitMap();
+		enemyList.Clear ();
 	}
 
 	void UpdateFoodText(int chx) {
@@ -68,5 +75,11 @@ public class GameManager : MonoBehaviour {
 				enemy.Move ();
 			}
 		}
+	}
+
+	public void OnLevelWasLoaded(int scence_level) {
+		Debug.Log ("level:" + scence_level);
+		level++;
+		initGame ();
 	}
 }

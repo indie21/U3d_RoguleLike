@@ -66,6 +66,7 @@ public class Enemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Debug.Log ("enemy start");
 		player = GameObject.FindGameObjectWithTag ("Player").transform;
 		targetPos = transform.position;
 		rigidbody2Dx = GetComponent<Rigidbody2D> ();

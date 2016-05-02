@@ -27,7 +27,6 @@ public class MapManager : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		gameManager = this.GetComponent<GameManager> ();
-		initMap ();
 	}
 	
 	// Update is called once per frame
@@ -62,7 +61,7 @@ public class MapManager : MonoBehaviour {
 	}
 
 	// 初始化地图
-	private void initMap() {
+	public void InitMap() {
 		positionList = new List<Vector2> ();
 		mapHolder = new GameObject("map").transform;
 		GameObject go;
